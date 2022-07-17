@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GPE : MonoBehaviour
+public class NewDice : Pickup
 {
-    public virtual void PickupEffect()
+    void Start()
     {
-
+        
     }
 }
