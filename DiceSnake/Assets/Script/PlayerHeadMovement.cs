@@ -11,7 +11,7 @@ public class PlayerHeadMovement : PlayerMovement
     public PlayerMovement bodyCell;
     private List<PlayerMovement> corps = new List<PlayerMovement>();
     private Facing dir = Facing.East;
-    protected float changeStamp = 0f;
+    private Facing nextDir = Facing.East;
 
     protected override void Start()
     {
@@ -29,66 +29,72 @@ public class PlayerHeadMovement : PlayerMovement
 
     protected override void Update()
     {
+        if (Time.time - changeStamp >= timeToNextCell)
+        {
+            ResetTime();
+
+            SetAllTargets();
+
+            if (Input.GetKey(KeyCode.C)) Debug.Break();
+        }
+
+        transform.rotation = Quaternion.LookRotation((target.position-from.position).normalized);
+
         base.Update();
 
-        if(Input.GetKeyDown(KeyCode.LeftArrow))
+        switch (dir)
         {
-            switch (dir)
-            {
-                case Facing.North:
+            case Facing.North:
+                {
+                    if (Input.GetKeyDown(KeyCode.LeftArrow))
                     {
-                        dir = Facing.West;
-                        break;
+                        nextDir = Facing.West;
+                    } 
+                    else if (Input.GetKeyDown(KeyCode.RightArrow))
+                    {
+                        nextDir = Facing.East;
                     }
+                    break;
+                }
 
-                case Facing.East:
+            case Facing.East:
+                {
+                    if (Input.GetKeyDown(KeyCode.UpArrow))
                     {
-                        dir = Facing.North;
-                        break;
+                        nextDir = Facing.North;
                     }
+                    else if (Input.GetKeyDown(KeyCode.DownArrow))
+                    {
+                        nextDir = Facing.South;
+                    }
+                    break;
+                }
 
-                case Facing.South:
+            case Facing.South:
+                {
+                    if (Input.GetKeyDown(KeyCode.LeftArrow))
                     {
-                        dir = Facing.East;
-                        break;
+                        nextDir = Facing.West;
                     }
+                    else if (Input.GetKeyDown(KeyCode.RightArrow))
+                    {
+                        nextDir = Facing.East;
+                    }
+                    break;
+                }
 
-                case Facing.West:
+            case Facing.West:
+                {
+                    if (Input.GetKeyDown(KeyCode.UpArrow))
                     {
-                        dir = Facing.South;
-                        break;
+                        nextDir = Facing.North;
                     }
-            }
-        }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-
-            switch (dir)
-            {
-                case Facing.North:
+                    else if (Input.GetKeyDown(KeyCode.DownArrow))
                     {
-                        dir = Facing.East;
-                        break;
+                        nextDir = Facing.South;
                     }
-
-                case Facing.East:
-                    {
-                        dir = Facing.South;
-                        break;
-                    }
-
-                case Facing.South:
-                    {
-                        dir = Facing.West;
-                        break;
-                    }
-
-                case Facing.West:
-                    {
-                        dir = Facing.North;
-                        break;
-                    }
-            }
+                    break;
+                }
         }
     }
 
@@ -123,17 +129,9 @@ public class PlayerHeadMovement : PlayerMovement
         SetNextTarget(GridManager.gridCells[x][y].anchor);
     }
 
-    public void LateUpdate()
-    {
-        if (Time.time - changeStamp >= timeToNextCell)
-        {
-            SetAllTargets();
-        }
-    }
-
     public void SetAllTargets()
     {
-        ResetTime();
+        dir = nextDir;
 
         SetNextByDirection();
 
@@ -145,8 +143,17 @@ public class PlayerHeadMovement : PlayerMovement
         }
     }
 
-    protected void ResetTime()
+    public void Collision()
     {
-        changeStamp = Time.time;
+        GPE content = GridManager.gridCells[x][y].cellContent;
+
+        if (content.GetType() == typeof(Pickup))
+        {
+            content.PickupEffect();
+        }
+        else
+        {
+            GridManager.GameOver();
+        }
     }
 }
