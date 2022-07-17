@@ -18,6 +18,7 @@ public class PlayerHeadMovement : PlayerMovement
         base.Start();
 
         transform.position = GridManager.gridCells[x][y].anchor.position;
+        currentCell = GridManager.gridCells[x][y];
 
         for (int i = 0; i < bodyLengthInit; i++)
         {
@@ -25,16 +26,20 @@ public class PlayerHeadMovement : PlayerMovement
         }
 
         SetAllTargets();
+
+        corps[0].GetComponent<MeshRenderer>().enabled = false;
     }
 
     public void AddSegment(int value)
     {
         PlayerMovement pm;
 
-        pm = Instantiate(bodyCell, transform.position, transform.rotation);
+        pm = Instantiate(bodyCell, /*corps[corps.Count-1].*/transform.position, transform.rotation);
 
         pm.x = x;
         pm.y = y;
+
+        pm.currentCell = currentCell;
 
         pm.value = value;
 
@@ -140,7 +145,10 @@ public class PlayerHeadMovement : PlayerMovement
                     break;
                 }
         }
-        SetNextTarget(GridManager.gridCells[x][y].anchor);
+
+        Collision();
+
+        SetNextTarget(x,y);
     }
 
     public void SetAllTargets()
@@ -149,11 +157,11 @@ public class PlayerHeadMovement : PlayerMovement
 
         SetNextByDirection();
 
-        corps[0].SetNextTarget(from);
+        corps[0].SetNextTarget(currentCell.x,currentCell.y);
 
         for (int i = 1; i < corps.Count - 1; i++)
         {
-            corps[i].SetNextTarget(corps[i - 1].from);
+            corps[i].SetNextTarget(corps[i - 1].currentCell.x, corps[i - 1].currentCell.y);
         }
     }
 
@@ -161,7 +169,12 @@ public class PlayerHeadMovement : PlayerMovement
     {
         GPE content = GridManager.gridCells[x][y].cellContent;
 
-        if (content.GetType() == typeof(Pickup))
+        if (content ==null)
+        {
+            return;
+        }
+
+        if (content.GetComponent<Pickup>())
         {
             content.PickupEffect();
         }

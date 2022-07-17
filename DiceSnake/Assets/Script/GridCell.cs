@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class GridCell : MonoBehaviour
 {
+    public int x;
+    public int y;
+
     public Transform anchor;
 
     public GPE cellContent { get; private set; } = null ;

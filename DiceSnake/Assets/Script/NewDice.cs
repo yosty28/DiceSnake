@@ -15,6 +15,8 @@ public class NewDice : Pickup
     {
         Debug.Log(value);
 
+        FindObjectOfType<PlayerHeadMovement>().AddSegment(value);
+
         Destroy(this.gameObject);
     }
 }

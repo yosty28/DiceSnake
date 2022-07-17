@@ -13,13 +13,20 @@ public class GridFromSelf : MonoBehaviour
     {
         GridManager.InitGrid(gridDim);
 
+        GridCell gc;
+
         var g = GridPos();
 
         for (int i = 0; i < gridDim; i++)
         {
             for (int j = 0; j < gridDim; j++)
             {
-                GridManager.gridCells[i][j] = Instantiate(content, g[i][j], content.transform.rotation).GetComponent<GridCell>();
+                gc = Instantiate(content, g[i][j], content.transform.rotation).GetComponent<GridCell>();
+
+                gc.x = i;
+                gc.y = j;
+
+                GridManager.gridCells[i][j] = gc;
             }
         }
 

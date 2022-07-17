@@ -14,7 +14,7 @@ public class PlayerMovement : GPE
     protected float timeToNextCell = 0.5f;
     protected float changeStamp = 0f;
 
-    private GridCell currentCell;
+    public GridCell currentCell;
 
     protected virtual void Start()
     {
@@ -27,14 +27,20 @@ public class PlayerMovement : GPE
         transform.position = Vector3.Lerp(from.position, target.position, (Time.time - changeStamp) / timeToNextCell);
     }
 
-    public void SetNextTarget(Transform t)
+    public void SetNextTarget(int _x, int _y)
     {
         ResetTime();
 
-        if(target.GetComponent<GridCell>())
-        {
-            target.GetComponent<GridCell>().changeContent(this);
-        }
+        currentCell.EmptyCell();
+
+        GridManager.gridCells[x][y].changeContent(this);
+        currentCell = GridManager.gridCells[x][y];
+
+
+        x = _x;
+        y = _y;
+
+        Transform t = GridManager.gridCells[x][y].anchor;
 
         from = target;
         target = t;

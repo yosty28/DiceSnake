@@ -41,6 +41,8 @@ public class PickupSpawner : MonoBehaviour
 
         GridCell gc = GridManager.GetRandomFreeCell();
 
-        gc.changeContent(Instantiate(pickups[n], gc.anchor.position, Quaternion.identity));
+        var e = Instantiate(pickups[n], gc.anchor.position, Quaternion.identity);
+
+        gc.changeContent(e);
     }
 }
