@@ -22,11 +22,6 @@ public static class GridManager
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
     }
 
-<<<<<<< Updated upstream
-    public GridCell GetRandomFreeCell()
-    {
-
-=======
     public static GridCell GetRandomFreeCell()
     {
         int x = Random.Range(0, gridCells.Length- 1);
@@ -39,6 +34,5 @@ public static class GridManager
         }
 
         return gridCells[x][y];
->>>>>>> Stashed changes
     }
 }
