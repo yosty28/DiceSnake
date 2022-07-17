@@ -22,6 +22,8 @@ public class GridFromSelf : MonoBehaviour
                 GridManager.gridCells[i][j] = Instantiate(content, g[i][j], content.transform.rotation).GetComponent<GridCell>();
             }
         }
+
+        Destroy(this.gameObject);
     }
 
     private Vector3[][] GridPos()

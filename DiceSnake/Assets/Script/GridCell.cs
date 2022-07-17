@@ -8,6 +8,11 @@ public class GridCell : MonoBehaviour
 
     public GPE cellContent { get; private set; } = null ;
 
+    public void EmptyCell()
+    {
+        cellContent = null;
+    }
+
     public bool IsEmpty()
     {
         return cellContent == null;
