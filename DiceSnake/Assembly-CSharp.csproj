@@ -60,6 +60,10 @@
     <Compile Include="Assets\Script\GridCell.cs" />
     <Compile Include="Assets\Script\PlayerHeadMovement.cs" />
     <Compile Include="Assets\Script\Enum.cs" />
+    <Compile Include="Assets\Script\ShowScore.cs" />
+    <Compile Include="Assets\Script\ShowTime.cs" />
+    <Compile Include="Assets\Script\SoundLibrairie.cs" />
+    <Compile Include="Assets\Script\StartupSounds.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
