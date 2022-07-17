@@ -2,17 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : GPE
 {
-    // Start is called before the first frame update
-    void Start()
+    public Transform from;
+    public Transform target;
+    protected float timeToNextCell = 1f;
+
+    protected virtual void Start()
     {
-        
+        from = transform;
+        target = transform;
     }
 
-    // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
-        
+        transform.position = Vector3.Lerp(from.position, target.position, (Time.time % timeToNextCell) / timeToNextCell);
+    }
+
+    public void SetNextTarget(Transform t)
+    {
+        if(target.GetComponent<GridCell>())
+        {
+            target.GetComponent<GridCell>().changeContent(this);
+        }
+
+        from = target;
+        target = t;
     }
 }

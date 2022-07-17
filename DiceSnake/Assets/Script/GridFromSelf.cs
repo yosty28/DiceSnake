@@ -8,11 +8,10 @@ public class GridFromSelf : MonoBehaviour
     public float spacing;
 
     public GameObject content;
-    public GridManager GM;
 
-    private void Start()
+    private void Awake()
     {
-        GM.InitGrid(gridDim);
+        GridManager.InitGrid(gridDim);
 
         var g = GridPos();
 
@@ -20,7 +19,7 @@ public class GridFromSelf : MonoBehaviour
         {
             for (int j = 0; j < gridDim; j++)
             {
-                GM.gridCells[i][j] = Instantiate(content, g[i][j], content.transform.rotation).GetComponent<GridCell>();
+                GridManager.gridCells[i][j] = Instantiate(content, g[i][j], content.transform.rotation).GetComponent<GridCell>();
             }
         }
     }

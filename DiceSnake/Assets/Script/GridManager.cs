@@ -2,12 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridManager : MonoBehaviour
+public static class GridManager
 {
-    public PlayerMovement player;
-    public GridCell[][] gridCells;
+    public static GridCell[][] gridCells;
 
-    public void InitGrid(int size)
+    public static void InitGrid(int size)
     {
         gridCells = new GridCell[size][];
 
@@ -15,10 +14,5 @@ public class GridManager : MonoBehaviour
         {
             gridCells[i] = new GridCell[size];
         }
-    }
-
-    public void InitPlayer(int x, int y)
-    {
-
     }
 }

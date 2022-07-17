@@ -58,6 +58,8 @@
     <Compile Include="Assets\Script\GPE.cs" />
     <Compile Include="Assets\Script\GridManager.cs" />
     <Compile Include="Assets\Script\PlayerMovement.cs" />
+    <Compile Include="Assets\Script\Enum.cs" />
+    <Compile Include="Assets\Script\PlayerHeadMovement.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
